@@ -1,4 +1,5 @@
 import pandas as pd
+from tqdm import tqdm
 
 
 def main():
@@ -6,6 +7,9 @@ def main():
 
     first_star_solution = solve_first_star(left_list, right_list)
     print(f"The total distance is {first_star_solution}")
+
+    second_star_solution = solve_second_star(left_list, right_list)
+    print(f"The total similarity is {second_star_solution}")
 
 
 def read_input(filename):
@@ -15,18 +19,28 @@ def read_input(filename):
     return left_list, right_list
 
 def solve_first_star(left_list, right_list):
-    left_list.sort()
-    right_list.sort()
+    left_list_sorted = sorted(left_list)
+    right_list_sorted = sorted(right_list)
 
     total_distance = 0
-    while len(left_list) != 0 and len(right_list) != 0:
-        distance = abs(left_list.pop() - right_list.pop())
+    while len(left_list_sorted) != 0 and len(right_list_sorted) != 0:
+        distance = abs(left_list_sorted.pop() - right_list_sorted.pop())
         total_distance += distance
 
     return total_distance
 
 def solve_second_star(left_list, right_list):
-    pass
+    total_similarity = 0
+    for i in tqdm(left_list):
+        count_in_right = 0
+        for j in right_list:
+            if i == j:
+                count_in_right += 1
+        similarity = i * count_in_right
+        total_similarity += similarity
+
+    return total_similarity
+
 
 if __name__ == '__main__':
     main()
