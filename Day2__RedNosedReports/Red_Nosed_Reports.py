@@ -11,26 +11,23 @@ def main():
     print(f"Unsafe: {unsafe_reports}")
 
 def read_input(filepath):
-    lines = []
     with open(filepath, mode='r') as file:
         lines = file.readlines()
     print(f"{len(lines)} reports read")
     return lines
 
 def check_consistency(report: str) -> bool:
-    report = report.split(' ')
-    if report == sorted(report) or report == sorted(report, reverse=True):
-        return True
-    else:
-        return False
+    report = list(map(int, report.split(' ')))
+    return report == sorted(report) or report == sorted(report, reverse=True)
 
 def check_differences(report: str) -> bool:
-    report = report.split(' ')
+    report = list(map(int, report.split()))
     for i in range(len(report) - 1):
-        difference = abs(int(report[i]) - int(report[i+1]))
+        difference = abs(report[i] - report[i+1])
         if difference < 1 or difference > 3:
             return False
     return True
+
 
 if __name__ == '__main__':
     main()
