@@ -3,12 +3,22 @@ import re
 
 def main():
     memory = read_input("input.txt")
+    pattern = re.compile("mul\(\d+,\d+\)|do\(\)|don\'t\(\)")
 
     result = 0
+    skip = False
     for line in memory:
-        matches = re.findall("mul\(\d+,\d+\)", line)
+        matches = re.findall(pattern, line)
         for match in matches:
-            result += eval(match)
+            if match == "don't()":
+                skip = True
+            elif match == "do()":
+                skip = False
+            else:
+                if skip:
+                    pass
+                else:
+                    result += eval(match)
     print(result)
 
 def read_input(file):
