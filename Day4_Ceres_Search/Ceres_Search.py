@@ -3,7 +3,6 @@ import numpy as np
 
 def main():
     word_search = read_input("input.txt")
-    #print(word_search)
     horizontal = search_horizontal(word_search)
     vertical = search_vertical(word_search)
     diagonal = search_diagonal(word_search)
@@ -20,9 +19,11 @@ def read_input(filename):
 def search_horizontal(word_search):
     count = 0
     for line in word_search:
-        for i in range(len(line)-3):
-            if line[i:i+4] == ['X','M','A','S'] or line[i:i+4] == ['S','A','M','X']:
-                count += 1
+        if len(line) >= 4:
+            for i in range(len(line)):
+                print(line[i:i+4])
+                if line[i:i+4] == ['X','M','A','S'] or line[i:i+4] == ['S','A','M','X']:
+                    count += 1
     return count
 def search_vertical(word_search):
     word_matrix = np.asmatrix(word_search).transpose().tolist()
@@ -31,7 +32,7 @@ def search_vertical(word_search):
 
 def search_diagonal(word_search):
     word_matrix = np.asmatrix(word_search)
-    word_matrix_t = word_matrix.transpose()
+    word_matrix_t = np.fliplr(word_matrix).transpose()
     diagonals, diagonals_t = [[],[]]
     for i in range(-len(word_matrix), len(word_matrix)):
         diagonals.append(np.diag(word_matrix, i).tolist())
