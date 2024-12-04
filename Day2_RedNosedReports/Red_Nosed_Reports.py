@@ -32,9 +32,9 @@ def check_differences(report: list[int]) -> bool:
     return True
 
 def dampen(report: list[int]) -> list[int]:
-    for level in report:
+    for i in range(len(report)):
         dampened_report = report.copy()
-        dampened_report.remove(level)
+        dampened_report.pop(i)
         if check_consistency(dampened_report) and check_differences(dampened_report):
             return dampened_report
     return report
