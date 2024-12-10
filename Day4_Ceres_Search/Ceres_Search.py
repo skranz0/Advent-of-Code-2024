@@ -7,6 +7,7 @@ def main():
     vertical = search_vertical(word_search)
     diagonal = search_diagonal(word_search)
     print(f"{horizontal} + {vertical} + {diagonal} = {horizontal + vertical + diagonal}")
+    print(f"Part 2: {search_3x3(word_search)}")
 
 def read_input(filename):
     with open(filename, 'r') as f:
@@ -38,6 +39,21 @@ def search_diagonal(word_search):
         diagonals.append(np.diag(word_matrix, i).tolist())
         diagonals_t.append(np.diag(word_matrix_t, i).tolist())
     count = search_horizontal(diagonals) + search_horizontal(diagonals_t)
+    return count
+
+def search_3x3(word_search):
+    word_matrix = np.asmatrix(word_search)
+
+
+    count = 0
+    for i in range(1,len(word_matrix)-1):
+        for j in range(1,len(word_matrix)-1):
+            if word_matrix[i,j] == 'A':
+                if ((word_matrix[i-1,j-1] == 'M' and word_matrix[i+1,j+1] == 'S' or
+                     word_matrix[i-1,j-1] == 'S' and word_matrix[i+1,j+1] == 'M') and
+                    (word_matrix[i-1,j+1] == 'M' and word_matrix[i+1,j-1] == 'S' or
+                     word_matrix[i-1,j+1] == 'S' and word_matrix[i+1,j-1] == 'M')):
+                    count += 1
     return count
 
 if __name__ == '__main__':
